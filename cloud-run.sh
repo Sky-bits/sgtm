@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# set the GCP project ID 
+#gcloud config set project PROJECT_ID
+
 img_build_url="gcr.io/cloud-tagging-10302018/gtm-cloud-image:stable"
 # Function to create a new Cloud Run service
 create_cloud_run_service() {
