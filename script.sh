@@ -21,3 +21,31 @@ MEMORY_LIMIT_HELP="  Enter the memory limit for each instance. If you specify hi
   need to allocate a minimum of 2 CPUs, and if you want to allocate 4 CPUs, you will
   need to set a memory limit of at least 2Gi (CPU limits will be prompted from you next)."
 CPU_LIMIT_HELP="  Enter the number of CPUs to use for each instance. Options are 1, 2, and 4. If you set
+  the memory limit to higher than 4Gi, you must allocate at least 2 CPUs. If you want to
+  allocate 4 CPUs, the memory limit must be at least 2Gi."
+SAME_SETTINGS="  Your configured settings are the same as the current deployment."
+CONFIG_ENV_PATH=".spec.template.spec.containers[0].env[]"
+CONFIG_MEMORY_PATH=".spec.template.spec.containers[0].resources.limits.memory"
+CONFIG_CPU_PATH=".spec.template.spec.containers[0].resources.limits.cpu"
+CONFIG_MAX_SCALE_PATH='.spec.template.metadata.annotations."autoscaling.knative.dev/maxScale"'
+CONFIG_MIN_SCALE_PATH='.spec.template.metadata.annotations."autoscaling.knative.dev/minScale"'
+REGION_PATH='.metadata.labels."cloud.googleapis.com/location"'
+CPU_LIMIT_REGEX="^[124]$"
+MEMORY_LIMIT_REGEX="^[1-9]+[0-9]*[MG][Bi]$"
+POSITIVE_INT_REGEX="^[1-9]+[0-9]*$"
+POSITIVE_INT_OR_ZERO_REGEX="^([1-9]+[0-9]*|0)$"
+trap "exit" INT
+set -e
+
+generate_suggested() {
+  echo "$([[ -z "$1" || "$1" == 'null' ]] && echo "$2" || echo "Current: $1")"
+}
+
+get_config() {
+  echo "$(gcloud run services describe "${service_prefix}"-prod --format=json)"
+}
+
+prompt_service_prefix() {
+  while [[ -z "${service_prefix}" || "${service_prefix}" == '?' ]]; do
+    recommended="gtm-server"
+    suggested
