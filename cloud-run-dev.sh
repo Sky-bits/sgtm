@@ -5,15 +5,15 @@
 # Set variables
 img_build_url="gcr.io/cloud-tagging-10302018/gtm-cloud-image:stable"
 RUN_AS_PREVIEW_SERVER="true"
-CONTAINER_CONFIG="{ContainerId given to you on GTM Serverside setup}"
+CONTAINER_CONFIG="aWQ9R1RNLVBNS1JNU1AmZW52PTEmYXV0aD1uY2l0eFBmWWk5WFBQQi1GTUtxNTV3"
 PORT=80
 
 # Set Cloud Run service name
-read -p "Enter a name for the Cloud Run service: " SERVICE_NAME
+# read -p "Enter a name for the Cloud Run service: " SERVICE_NAME
 
-# Set environment variables
-# read -p "Enter the value for RUN_AS_PREVIEW_SERVER: " RUN_AS_PREVIEW_SERVER_VALUE
-read -p "Enter the value for CONTAINER_CONFIG: " CONTAINER_CONFIG_VALUE
+# # Set environment variables
+# # read -p "Enter the value for RUN_AS_PREVIEW_SERVER: " RUN_AS_PREVIEW_SERVER_VALUE
+# read -p "Enter the value for CONTAINER_CONFIG: " CONTAINER_CONFIG_VALUE
 
  
 # Function to create a new Cloud Run service
@@ -25,6 +25,8 @@ create_cloud_run_service() {
   local memory="$4"
   local max_instances="$5"
 
+echo "CONTAINER_CONFIG URL: $CONTAINER_CONFIG_VALUE"
+echo "Port : $PORT"
 
   # Deploy the Cloud Run service
   gcloud run deploy "$service_name" \
