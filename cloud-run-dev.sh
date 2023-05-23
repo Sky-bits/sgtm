@@ -36,9 +36,9 @@ echo "Port : $PORT"
     --max-instances="$max_instances" \
     --port="$PORT" \
     --platform managed \
-    --update-env-vars "$env_vars" \
+#     --update-env-vars "$env_vars" \
     --allow-unauthenticated \
-#     --set-env-vars "RUN_AS_PREVIEW_SERVER=$RUN_AS_PREVIEW_SERVER_VALUE,CONTAINER_CONFIG=$CONTAINER_CONFIG"
+    --set-env-vars "RUN_AS_PREVIEW_SERVER=$RUN_AS_PREVIEW_SERVER_VALUE,CONTAINER_CONFIG=$CONTAINER_CONFIG"
 
 # Print service URL
 SERVICE_URL=$(gcloud run services describe "$SERVICE_NAME" --format 'value(status.url)' 2>/dev/null)
