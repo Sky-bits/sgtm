@@ -13,7 +13,7 @@ PORT=80
 
 # # Set environment variables
 # # read -p "Enter the value for RUN_AS_PREVIEW_SERVER: " RUN_AS_PREVIEW_SERVER_VALUE
-# read -p "Enter the value for CONTAINER_CONFIG: " CONTAINER_CONFIG_VALUE
+# read -p "Enter the value for CONTAINER_CONFIG: " CONTAINER_CONFIG
 
  
 # Function to create a new Cloud Run service
@@ -25,7 +25,7 @@ create_cloud_run_service() {
   local memory="$4"
   local max_instances="$5"
 
-echo "CONTAINER_CONFIG URL: $CONTAINER_CONFIG_VALUE"
+echo "CONTAINER_CONFIG URL: $CONTAINER_CONFIG"
 echo "Port : $PORT"
 
   # Deploy the Cloud Run service
@@ -38,7 +38,7 @@ echo "Port : $PORT"
     --platform managed \
     --update-env-vars "$env_vars" \
     --allow-unauthenticated \
-    --set-env-vars "RUN_AS_PREVIEW_SERVER=$RUN_AS_PREVIEW_SERVER_VALUE,CONTAINER_CONFIG=$CONTAINER_CONFIG_VALUE"
+#     --set-env-vars "RUN_AS_PREVIEW_SERVER=$RUN_AS_PREVIEW_SERVER_VALUE,CONTAINER_CONFIG=$CONTAINER_CONFIG"
 
 # Print service URL
 SERVICE_URL=$(gcloud run services describe "$SERVICE_NAME" --format 'value(status.url)' 2>/dev/null)
