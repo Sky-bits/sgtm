@@ -6,6 +6,7 @@
 img_build_url="gcr.io/cloud-tagging-10302018/gtm-cloud-image:stable"
 RUN_AS_PREVIEW_SERVER="true"
 CONTAINER_CONFIG="{ContainerId given to you on GTM Serverside setup}"
+PORT=80
 
 # Set Cloud Run service name
 read -p "Enter a name for the Cloud Run service: " SERVICE_NAME
@@ -30,7 +31,8 @@ create_cloud_run_service() {
     --image="$image_url" \
     --region="$region" \
     --memory="$memory" \
-    --max-instances="$max_instances"
+    --max-instances="$max_instances" \
+    --port="$PORT" \
     --platform managed \
     --update-env-vars "$env_vars" \
     --allow-unauthenticated \
